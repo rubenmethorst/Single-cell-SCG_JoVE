@@ -11,7 +11,6 @@ The cardiac autonomic nervous system is crucial in controlling cardiac function,
 * `Script_SCG_JOVE.R`: Used to perform all analyses presented in the manuscript
 
 Figures can also be plotting using above mentioned script. Associated results are located here: `Result/` <br />
-In the `Data/` folder, there is a excel-file containing a variety of cell markers for visualization purposes
 
 
 --------------------------
