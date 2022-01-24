@@ -264,11 +264,6 @@ quiet(dev.off())
 
 cat(paste0(bold(green("\nDone: Plots have been painted!\n"))))
 
-# Save the Seurat object
-saveRDS(SCG, file = paste0(path, "Seurat_pilot_SCG.RDS"), compress = T)
-
-cat(paste0(bold(green("\nSaved the Seurat object as: \'Seurat_pilot_SCG.RDS\'\n\n"))))
-
 # End of script
 timeEnd <- Sys.time()
 
