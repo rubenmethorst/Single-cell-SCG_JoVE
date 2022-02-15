@@ -2,8 +2,8 @@
 ##            Ruben Methorst, LUMC, 2021              ##
 ##            Szymon M. Kielbasa, LUMC, 2021          ##
 
-VERSION="v1.0.1"
-LASTEDITDATE="2022-01-20"
+VERSION="v1.0.2"
+LASTEDITDATE="2022-02-15"
 SCRIPTNAME="Analysis of cervical ganglia pilot dataset LUMC"
 AUTHOR="Ruben Methorst | r.methorst@lumc.nl"
 THISYEAR = format(as.Date(as.POSIXlt(Sys.time())), "%Y")
