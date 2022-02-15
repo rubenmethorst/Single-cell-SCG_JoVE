@@ -9,7 +9,7 @@ AUTHOR="Ruben Methorst | r.methorst@lumc.nl"
 THISYEAR = format(as.Date(as.POSIXlt(Sys.time())), "%Y")
 
 # Set the working path and paths to the input files/directories
-path <- "/Users/rubenmethorst/Desktop/Protocol paper/Results/"
+path <- "~/Documents/Studie/PhD/Single Cell Projects/JoVE paper/Single-cell-SCG_JoVE/Results/"
 
 SCG_pilot_path <- "/Users/rubenmethorst/Desktop/Protocol paper/Data/"
 
@@ -238,7 +238,74 @@ ggsave(Marker_genes_sy, file = paste0(path, "Symp_markers_UMAP_plot.pdf"), width
 UMAP_plot_HTO <- DimPlot(SCG, reduction = "umap", group.by = "Antibody_classification.cleaned", label = F) + coord_fixed() + ggtitle("HTO Antibodies")
 ggsave(UMAP_plot_HTO, file = paste0(path, "UMAP_HTO.pdf"), width = 4.5*5, height = 6*5, units = "cm", dpi = 600, scale = 0.75)
 
+# AS PER REQUEST: Median genes detected per cluster
+# Extract seurat clusters with cellIDs
+cell_ids <- as.data.frame(SCG@meta.data)
 
+cell_ids <- tibble::rownames_to_column(cell_ids, "cell_id")
+cell_ids <- cell_ids[,c(1,16)]
+
+# Raw data
+raw_counts <- as.data.frame(SCG@assays$RNA@data)
+
+# Find nonzero expression counts per cell
+nonzero_expression <- colSums(raw_counts != 0)
+cell_ids$nonzero_expression <- nonzero_expression
+
+# Boxplot
+median_plot <- ggplot(cell_ids, aes(x = seurat_clusters, y = nonzero_expression, fill = seurat_clusters)) +
+  geom_violin() + geom_boxplot(width=0.1) + theme_minimal() + scale_fill_brewer(palette="Spectral") + 
+  theme(legend.position = "none",
+            panel.background = element_rect(fill = "#FFFFFF",
+                                            colour = "#FFFFFF"),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.line = element_line(colour = "black")) +
+      labs(x = "Clusters") +
+      labs(y = "Gene expression", ) 
+
+
+
+ggsave(median_plot, file = paste0(path, "median_plot.pdf"), width = 4.5*8, height = 6*5, units = "cm", dpi = 600, scale = 0.75)
+
+# Reshape and calculate median and quartiles
+wide <- as.data.frame(cell_ids %>% 
+  pivot_wider(names_from = seurat_clusters, values_from = nonzero_expression))
+
+# Median values (converting to a dataframe for easy export isn't easy apparently)
+sumstats = function(x) { 
+  null.k <- function(x) sum(is.na(x))
+  unique.k <- function(x) {if (sum(is.na(x)) > 0) length(unique(x)) - 1
+    else length(unique(x))}
+  range.k <- function(x) max(x, na.rm=TRUE) - min(x, na.rm=TRUE)
+  mean.k=function(x) {if (is.numeric(x)) round(mean(x, na.rm=TRUE), digits=2)
+    else "N*N"} 
+  sd.k <- function(x) {if (is.numeric(x)) round(sd(x, na.rm=TRUE), digits=2)
+    else "N*N"} 
+  min.k <- function(x) {if (is.numeric(x)) round(min(x, na.rm=TRUE), digits=2)
+    else "N*N"} 
+  q05 <- function(x) quantile(x, probs=.05, na.rm=TRUE)
+  q10 <- function(x) quantile(x, probs=.1, na.rm=TRUE)
+  q25 <- function(x) quantile(x, probs=.25, na.rm=TRUE)
+  q50 <- function(x) quantile(x, probs=.5, na.rm=TRUE)
+  q75 <- function(x) quantile(x, probs=.75, na.rm=TRUE)
+  q90 <- function(x) quantile(x, probs=.9, na.rm=TRUE)
+  q95 <- function(x) quantile(x, probs=.95, na.rm=TRUE)
+  max.k <- function(x) {if (is.numeric(x)) round(max(x, na.rm=TRUE), digits=2)
+    else "N*N"} 
+  
+  sumtable <- cbind(as.matrix(colSums(!is.na(x))), sapply(x, null.k), sapply(x, unique.k), sapply(x, range.k), sapply(x, mean.k), sapply(x, sd.k),
+                    sapply(x, min.k), sapply(x, q05), sapply(x, q10), sapply(x, q25), sapply(x, q50),
+                    sapply(x, q75), sapply(x, q90), sapply(x, q95), sapply(x, max.k)) 
+  
+  sumtable <- as.data.frame(sumtable); names(sumtable) <- c('count', 'null', 'unique',
+                                                            'range', 'mean', 'std', 'min', '5%', '10%', '25%', '50%', '75%', '90%',
+                                                            '95%', 'max') 
+  return(sumtable)
+} 
+median_table <- as.data.frame(sumstats(wide[,2:13]))[,c(1, 10:12)]
+
+write.csv(median_table, file = paste0(path, "median_table.csv"), row.names = T)
 
 # Plot data and save as PDF (it looks bad, but it gets the job done)
 pdf(file = paste0(path, "plots_combined.pdf"), 
@@ -265,9 +332,9 @@ quiet(dev.off())
 cat(paste0(bold(green("\nDone: Plots have been painted!\n"))))
 
 # Save the Seurat object
-saveRDS(SCG, file = paste0(path, "Seurat_pilot_SCG.RDS"), compress = T)
+#saveRDS(SCG, file = paste0(path, "Seurat_pilot_SCG.RDS"), compress = T)
 
-cat(paste0(bold(green("\nSaved the Seurat object as: \'Seurat_pilot_SCG.RDS\'\n\n"))))
+#cat(paste0(bold(green("\nSaved the Seurat object as: \'Seurat_pilot_SCG.RDS\'\n\n"))))
 
 # End of script
 timeEnd <- Sys.time()

@@ -6,7 +6,7 @@ Ruben Methorst | r.methorst@lumc.nl | 1998-2022.
 Required packages are installed and loaded!
 
 Loading data...
--/                                                                                                                                         
+-/                                                                                                                                     
 Data loaded! Now performing demultiplexing for you...
   |                                                  | 0 % ~calculating    |+++++++                                           | 12% ~00s            |+++++++++++++                                     | 25% ~00s            |+++++++++++++++++++                               | 38% ~00s            |+++++++++++++++++++++++++                         | 50% ~00s            |++++++++++++++++++++++++++++++++                  | 62% ~00s            |++++++++++++++++++++++++++++++++++++++            | 75% ~00s            |++++++++++++++++++++++++++++++++++++++++++++      | 88% ~00s            |++++++++++++++++++++++++++++++++++++++++++++++++++| 100% elapsed=00s  
 
@@ -48,5 +48,19 @@ Elapsed time: 0 seconds
 This many clusters are found: 12 
 
 Done: Plots have been painted!
+Finished in:  1.44949086904526  Minutes. 
+Thank you for analyzing with Ruben Methorst!
 
-Done: Plots have been painted!
+
+ 		Byebye
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ The MIT License (MIT)
+ Permission is hereby granted, free of charge, to any perSCGn obtaining a copy of this SCGftware and asSCGciated documentation files (the "SCGftware"), to deal in the SCGftware without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the SCGftware, and to permit perSCGns to whom the SCGftware is furnished to do SCG, subject to the following conditions:
+     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the SCGftware.
+ THE SCGFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SCGFTWARE OR THE USE OR OTHER DEALINGS IN THE SCGFTWARE.
+ Reference: http://openSCGurce.org.
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
